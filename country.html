@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Автодополнение стран</title>
+
+<style>
+#parent {
+    position: relative;
+    width: 300px;
+    margin: 50px;
+}
+
+#elem {
+    padding: 5px;
+    font-size: 18px;
+    width: 100%;
+}
+
+#parent ul {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    background-color: white;
+    width: 100%;
+}
+
+#parent li {
+    border: 1px solid gray;
+    font-size: 18px;
+    padding: 5px;
+}
+
+#parent li:hover {
+    border: 1px solid black;
+    cursor: pointer;
+    background: #f2f2f2;
+}
+</style>
+</head>
+<body>
+
+<div id="parent">
+    <input id="elem" placeholder="Введите страну">
+    <ul id="list"></ul>
+</div>
+
+<script>
+
+// Массив стран на русском
+let arr = [
+    'Россия',
+    'Казахстан',
+    'Украина',
+    'Беларусь',
+    'Узбекистан',
+    'Кыргызстан',
+    'Германия',
+    'Франция'
+];
+
+let input = document.getElementById('elem');
+let list = document.getElementById('list');
+
+input.addEventListener('input', function() {
+
+    let value = input.value.trim().toLowerCase();
+
+    list.innerHTML = '';
+
+    if (value === '') return;
+
+    let result = arr.filter(country =>
+        country.toLowerCase().startsWith(value)
+    );
+
+    result.forEach(country => {
+        let li = document.createElement('li');
+        li.textContent = country;
+
+        li.addEventListener('click', function() {
+            input.value = country;
+            list.innerHTML = '';
+        });
+
+        list.appendChild(li);
+    });
+});
+
+</script>
+
+</body>
+</html>
